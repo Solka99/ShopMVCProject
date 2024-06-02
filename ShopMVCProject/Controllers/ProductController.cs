@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShopMVCProject.Data;
 using ShopMVCProject.Models;
 
@@ -14,11 +15,19 @@ namespace ShopMVCProject.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList=_dbcontext.Products.ToList();
+            
             return View(objProductList);
         }
 
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _dbcontext.Categories
+                .Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+            ViewBag.CategoryList = CategoryList;
             return View();
         }
         [HttpPost]
