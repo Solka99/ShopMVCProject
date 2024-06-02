@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShopMVCProject.Models;
 
 namespace ShopMVCProject.Data
 {
@@ -8,5 +9,6 @@ namespace ShopMVCProject.Data
         {
                 
         }
+        public DbSet<Category> Categories { get; set; }
     }
 }
