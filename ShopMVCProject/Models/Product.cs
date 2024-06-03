@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ShopMVCProject.Models
 {
@@ -42,6 +43,7 @@ namespace ShopMVCProject.Models
         [ValidateNever]
         public Category Category { get; set; }
         [ValidateNever]
+        [AllowNull]
         public string ImageUrl { get; set; }
     }
 }

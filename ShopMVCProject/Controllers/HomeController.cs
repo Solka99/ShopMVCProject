@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShopMVCProject.Data;
 using ShopMVCProject.Models;
 using System.Diagnostics;
 
@@ -7,15 +9,18 @@ namespace ShopMVCProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _dbcontext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbcontext)
         {
             _logger = logger;
+            _dbcontext = dbcontext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> productList= _dbcontext.Products.Include(u => u.Category).ToList();
+            return View(productList);
         }
 
         public IActionResult Privacy()
