@@ -11,6 +11,9 @@ namespace ShopMVCProject.Data
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
