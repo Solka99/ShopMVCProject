@@ -22,6 +22,15 @@ namespace ShopMVCProject.Controllers
             IEnumerable<Product> productList= _dbcontext.Products.Include(u => u.Category).ToList();
             return View(productList);
         }
+        public IActionResult Details(int productId)
+        {
+            var productFromDb = _dbcontext.Products.Include(u => u.Category).FirstOrDefault(p => p.Id == productId);
+            if (productFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(productFromDb);
+        }
 
         public IActionResult Privacy()
         {
