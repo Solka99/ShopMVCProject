@@ -16,17 +16,6 @@ namespace ShopMVCProject.Controllers
         {
             _logger = logger;
             _dbcontext = dbcontext;
-           /* var newShoppingCart = new ShoppingCart
-            {
-               // Id = 1
-            };
-            _dbcontext.ShoppingCarts.Add(newShoppingCart);
-            _dbcontext.SaveChanges();
-           
-
-            _shoppingCart = newShoppingCart;
-           */
-        
         }
 
         public IActionResult Index()
@@ -37,13 +26,24 @@ namespace ShopMVCProject.Controllers
         }
         public IActionResult AddToCart(int productId)
         {
-            //do zmiany
+         
             var productFromDb = _dbcontext.Products.Include(u => u.Category).FirstOrDefault(p => p.Id == productId);
             if (productFromDb == null)
             {
                 return NotFound();
             }
             _shoppingCart = _dbcontext.ShoppingCarts.Include(sc => sc.Items).Where(x => x.Id == 1).FirstOrDefault();
+            if (_shoppingCart == null)
+            {
+                var newShoppingCart = new ShoppingCart
+                {
+                    //id is set automatically
+                    Items = new List<Item>()
+                };
+                _shoppingCart = newShoppingCart;
+                _dbcontext.ShoppingCarts.Add(newShoppingCart);
+                _dbcontext.SaveChanges();
+            }
              
             var itemExists = _shoppingCart.Items.Any(i => i.ProductId == productId);
             var existingItem = _shoppingCart.Items.FirstOrDefault(i => i.ProductId == productId);
@@ -63,8 +63,6 @@ namespace ShopMVCProject.Controllers
             }            
             _dbcontext.SaveChanges();
 
-
-            //return RedirectToAction("Index", "ShoppingCart",_shoppingCart);
             return RedirectToAction("Index","ShoppingCart");
         }
     

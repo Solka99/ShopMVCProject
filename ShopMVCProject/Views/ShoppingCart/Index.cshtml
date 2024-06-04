@@ -33,6 +33,7 @@
                 <h4 class="text-center">Total Price</h4>
                 <p class="text-center">@Model.Items.Sum(item => item.Product.Price * item.Quantity).ToString("c")</p>
                 <form asp-controller="ShoppingCart" asp-action="Checkout" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
                     <button type="submit" class="btn btn-success w-100">Buy</button>
                 </form>
             </div>
