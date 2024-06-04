@@ -27,7 +27,6 @@ namespace ShopMVCProject.Data
                 {
                     Id = 1,
                     Name = "Fortune of Time",
-                    Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     Price = 90,
                     CategoryId=1,
                     ImageUrl=""
@@ -36,7 +35,6 @@ namespace ShopMVCProject.Data
                 {
                     Id = 2,
                     Name = "Dark Skies",
-                    Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     Price = 30,
                     CategoryId = 1,
                     ImageUrl = ""
@@ -45,7 +43,6 @@ namespace ShopMVCProject.Data
                 {
                     Id = 3,
                     Name = "Vanish in the Sunset",
-                    Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     Price = 50,
                     CategoryId = 2,
                     ImageUrl = ""
@@ -54,7 +51,6 @@ namespace ShopMVCProject.Data
                 {
                     Id = 4,
                     Name = "Cotton Candy",
-                    Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     Price = 65,
                     CategoryId = 2,
                     ImageUrl = ""
@@ -63,7 +59,6 @@ namespace ShopMVCProject.Data
                 {
                     Id = 5,
                     Name = "Rock in the Ocean",
-                    Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     Price = 27,
                     CategoryId = 3,
                     ImageUrl = ""
@@ -72,11 +67,15 @@ namespace ShopMVCProject.Data
                 {
                     Id = 6,
                     Name = "Leaves and Wonders",
-                    Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     Price = 23,
                     CategoryId = 3,
                     ImageUrl = ""
                 }
+                );
+            modelBuilder.Entity<ShoppingCart>().HasData(
+                new ShoppingCart { Id = 1},
+                new ShoppingCart { Id = 2},
+                new ShoppingCart { Id = 3}
                 );
         }
     }

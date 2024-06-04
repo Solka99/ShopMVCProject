@@ -11,7 +11,6 @@ namespace ShopMVCProject.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
     
         [Required]
         [Range(1,1000)]
