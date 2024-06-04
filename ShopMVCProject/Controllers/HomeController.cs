@@ -43,18 +43,24 @@ namespace ShopMVCProject.Controllers
             {
                 return NotFound();
             }
-            var newItem = new Item
+            _shoppingCart = _dbcontext.ShoppingCarts.Include(sc => sc.Items).Where(x => x.Id == 1).FirstOrDefault();
+             
+            var itemExists = _shoppingCart.Items.Any(i => i.ProductId == productId);
+            var existingItem = _shoppingCart.Items.FirstOrDefault(i => i.ProductId == productId);
+            if (itemExists != null)
             {
-                ProductId = productFromDb.Id,
-                Quantity = 1,
-                ShoppingCartId = 1
-            };
-
-            _dbcontext.Items.Add(newItem);
-            _dbcontext.SaveChanges();
-
-            _shoppingCart = _dbcontext.ShoppingCarts.Where(x => x.Id == 1).FirstOrDefault();
-            _shoppingCart.Items.Add(newItem);
+                existingItem.Quantity++;
+            }
+            else
+            {
+                var newItem = new Item
+                {
+                    ProductId = productFromDb.Id,
+                    Quantity = 1,
+                    ShoppingCartId = 1
+                };
+                _shoppingCart.Items.Add(newItem);
+            }            
             _dbcontext.SaveChanges();
 
 
