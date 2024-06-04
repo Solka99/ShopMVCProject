@@ -24,10 +24,10 @@ namespace ShopMVCProject.Controllers
             return View(shoppingCart);
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public IActionResult RemoveItem(int itemId)
         {
-            var item = _dbcontext.Items.Find(itemId);
+            var item = _dbcontext.Items.Where(i=>i.ShoppingCartId==1 ).Where(j=>j.ItemId==itemId).FirstOrDefault();
             if (item != null)
             {
                 _dbcontext.Items.Remove(item);
@@ -35,7 +35,7 @@ namespace ShopMVCProject.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        /*
         [HttpPost]
         public IActionResult Checkout()
         {

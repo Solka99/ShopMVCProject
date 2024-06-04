@@ -47,7 +47,7 @@ namespace ShopMVCProject.Controllers
              
             var itemExists = _shoppingCart.Items.Any(i => i.ProductId == productId);
             var existingItem = _shoppingCart.Items.FirstOrDefault(i => i.ProductId == productId);
-            if (itemExists != null)
+            if (itemExists ==true)
             {
                 existingItem.Quantity++;
             }
