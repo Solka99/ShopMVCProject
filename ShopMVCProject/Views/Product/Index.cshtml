@@ -17,16 +17,10 @@
     <thead>
         <tr>
             <th>
-                Title
-            </th>
-            <th>
-                ISBN
+                Name
             </th>
             <th>
                 Price
-            </th>
-            <th>
-                Author
             </th>
             <th>
                 Category
@@ -38,10 +32,8 @@
         @foreach(var obj in Model)
         {
             <tr>
-                <td>@obj.Title</td>
-                <td>@obj.ISBN</td>
+                <td>@obj.Name</td>
                 <td>@obj.Price</td>
-                <td>@obj.Author</td>
                 <td>@obj.Category.Name</td>
 
                 <td>

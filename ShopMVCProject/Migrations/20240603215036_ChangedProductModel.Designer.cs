@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopMVCProject.Data;
 
@@ -10,9 +11,11 @@ using ShopMVCProject.Data;
 namespace ShopMVCProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240603215036_ChangedProductModel")]
+    partial class ChangedProductModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,32 +65,6 @@ namespace ShopMVCProject.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopMVCProject.Models.Item", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ShoppingCartId");
-
-                    b.ToTable("Items");
-                });
-
             modelBuilder.Entity("ShopMVCProject.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -98,6 +75,10 @@ namespace ShopMVCProject.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -121,6 +102,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Fortune of Time",
                             Price = 90.0
@@ -129,6 +111,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Dark Skies",
                             Price = 30.0
@@ -137,6 +120,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Vanish in the Sunset",
                             Price = 50.0
@@ -145,6 +129,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Cotton Candy",
                             Price = 65.0
@@ -153,6 +138,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 5,
                             CategoryId = 3,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Rock in the Ocean",
                             Price = 27.0
@@ -161,56 +147,11 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 6,
                             CategoryId = 3,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Leaves and Wonders",
                             Price = 23.0
                         });
-                });
-
-            modelBuilder.Entity("ShopMVCProject.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShoppingCarts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1
-                        },
-                        new
-                        {
-                            Id = 2
-                        },
-                        new
-                        {
-                            Id = 3
-                        });
-                });
-
-            modelBuilder.Entity("ShopMVCProject.Models.Item", b =>
-                {
-                    b.HasOne("ShopMVCProject.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShopMVCProject.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany("Items")
-                        .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("ShopMVCProject.Models.Product", b =>
@@ -222,11 +163,6 @@ namespace ShopMVCProject.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("ShopMVCProject.Models.ShoppingCart", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

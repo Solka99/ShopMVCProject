@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopMVCProject.Data;
 
@@ -10,9 +11,11 @@ using ShopMVCProject.Data;
 namespace ShopMVCProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240603225808_AddedItemAndShoppingCart")]
+    partial class AddedItemAndShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,6 +102,10 @@ namespace ShopMVCProject.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -121,6 +128,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Fortune of Time",
                             Price = 90.0
@@ -129,6 +137,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Dark Skies",
                             Price = 30.0
@@ -137,6 +146,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Vanish in the Sunset",
                             Price = 50.0
@@ -145,6 +155,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Cotton Candy",
                             Price = 65.0
@@ -153,6 +164,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 5,
                             CategoryId = 3,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Rock in the Ocean",
                             Price = 27.0
@@ -161,6 +173,7 @@ namespace ShopMVCProject.Migrations
                         {
                             Id = 6,
                             CategoryId = 3,
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ImageUrl = "",
                             Name = "Leaves and Wonders",
                             Price = 23.0
@@ -178,20 +191,6 @@ namespace ShopMVCProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShoppingCarts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1
-                        },
-                        new
-                        {
-                            Id = 2
-                        },
-                        new
-                        {
-                            Id = 3
-                        });
                 });
 
             modelBuilder.Entity("ShopMVCProject.Models.Item", b =>
