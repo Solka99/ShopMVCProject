@@ -4,8 +4,9 @@ using ShopMVCProject.Data;
 using ShopMVCProject.Models;
 using System.Diagnostics;
 
-namespace ShopMVCProject.Controllers
+namespace ShopMVCProject.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -47,7 +48,7 @@ namespace ShopMVCProject.Controllers
              
             var itemExists = _shoppingCart.Items.Any(i => i.ProductId == productId);
             var existingItem = _shoppingCart.Items.FirstOrDefault(i => i.ProductId == productId);
-            if (itemExists ==true)
+            if (itemExists == true)
             {
                 existingItem.Quantity++;
             }
@@ -60,7 +61,7 @@ namespace ShopMVCProject.Controllers
                     ShoppingCartId = 1
                 };
                 _shoppingCart.Items.Add(newItem);
-            }            
+            }
             _dbcontext.SaveChanges();
 
             return RedirectToAction("Index","ShoppingCart");

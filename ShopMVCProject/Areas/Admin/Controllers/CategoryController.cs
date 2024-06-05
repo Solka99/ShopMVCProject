@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShopMVCProject.Data;
 using ShopMVCProject.Models;
+using ShopMVCProject.Utility;
 
-namespace ShopMVCProject.Controllers
+namespace ShopMVCProject.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;
@@ -13,10 +17,9 @@ namespace ShopMVCProject.Controllers
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList=_dbcontext.Categories.ToList();
+            List<Category> objCategoryList = _dbcontext.Categories.ToList();
             return View(objCategoryList);
         }
-
         public IActionResult Create()
         {
             return View();
@@ -35,11 +38,11 @@ namespace ShopMVCProject.Controllers
         }
         public IActionResult Edit(int? id)
         {
-            if(id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category categoryFromDb= _dbcontext.Categories.Find(id);
+            Category categoryFromDb = _dbcontext.Categories.Find(id);
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -72,11 +75,11 @@ namespace ShopMVCProject.Controllers
             }
             return View(categoryFromDb);
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj=_dbcontext.Categories.Find(id);
-            if(obj == null)
+            Category obj = _dbcontext.Categories.Find(id);
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -84,7 +87,7 @@ namespace ShopMVCProject.Controllers
             _dbcontext.SaveChanges();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index", "Category");
-            
+
         }
 
 

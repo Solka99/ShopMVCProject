@@ -1,26 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopMVCProject.Data;
 using ShopMVCProject.Models;
+using ShopMVCProject.Utility;
 
-namespace ShopMVCProject.Controllers
+namespace ShopMVCProject.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductController(ApplicationDbContext dbcontext,IWebHostEnvironment webHostEnvironment)
+        public ProductController(ApplicationDbContext dbcontext, IWebHostEnvironment webHostEnvironment)
         {
             _dbcontext = dbcontext;
             _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-           // _dbcontext.Products.Include(u => u.Category);
+            // _dbcontext.Products.Include(u => u.Category);
 
-            List<Product> objProductList=_dbcontext.Products.Include(u=>u.Category).ToList();
-            
+            List<Product> objProductList = _dbcontext.Products.Include(u => u.Category).ToList();
+
             return View(objProductList);
         }
 
@@ -36,15 +40,15 @@ namespace ShopMVCProject.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Product productObj,IFormFile? file)
+        public IActionResult Create(Product productObj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
-                    string fileName=Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath= Path.Combine(wwwRootPath, @"images\product");
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
@@ -69,11 +73,11 @@ namespace ShopMVCProject.Controllers
                     Value = u.Id.ToString()
                 });
             ViewBag.CategoryList = CategoryList;
-            if (id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Product productFromDb= _dbcontext.Products.Find(id);
+            Product productFromDb = _dbcontext.Products.Find(id);
             if (productFromDb == null)
             {
                 return NotFound();
@@ -119,11 +123,11 @@ namespace ShopMVCProject.Controllers
             }
             return View(productFromDb);
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Product obj=_dbcontext.Products.Find(id);
-            if(obj == null)
+            Product obj = _dbcontext.Products.Find(id);
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -131,7 +135,7 @@ namespace ShopMVCProject.Controllers
             _dbcontext.SaveChanges();
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index", "Product");
-            
+
         }
 
 
