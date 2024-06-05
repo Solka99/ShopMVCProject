@@ -1,21 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopMVCProject.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 namespace ShopMVCProject.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-                
+
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
@@ -28,8 +34,8 @@ namespace ShopMVCProject.Data
                     Id = 1,
                     Name = "Fortune of Time",
                     Price = 90,
-                    CategoryId=1,
-                    ImageUrl=""
+                    CategoryId = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -73,9 +79,9 @@ namespace ShopMVCProject.Data
                 }
                 );
             modelBuilder.Entity<ShoppingCart>().HasData(
-                new ShoppingCart { Id = 1},
-                new ShoppingCart { Id = 2},
-                new ShoppingCart { Id = 3}
+                new ShoppingCart { Id = 1 },
+                new ShoppingCart { Id = 2 },
+                new ShoppingCart { Id = 3 }
                 );
         }
     }

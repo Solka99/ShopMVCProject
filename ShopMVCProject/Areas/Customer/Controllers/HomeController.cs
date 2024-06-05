@@ -4,8 +4,9 @@ using ShopMVCProject.Data;
 using ShopMVCProject.Models;
 using System.Diagnostics;
 
-namespace ShopMVCProject.Controllers
+namespace ShopMVCProject.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,23 +17,23 @@ namespace ShopMVCProject.Controllers
         {
             _logger = logger;
             _dbcontext = dbcontext;
-           /* var newShoppingCart = new ShoppingCart
-            {
-               // Id = 1
-            };
-            _dbcontext.ShoppingCarts.Add(newShoppingCart);
-            _dbcontext.SaveChanges();
-           
+            /* var newShoppingCart = new ShoppingCart
+             {
+                // Id = 1
+             };
+             _dbcontext.ShoppingCarts.Add(newShoppingCart);
+             _dbcontext.SaveChanges();
 
-            _shoppingCart = newShoppingCart;
-           */
-        
+
+             _shoppingCart = newShoppingCart;
+            */
+
         }
 
         public IActionResult Index()
         {
-           
-            IEnumerable<Product> productList= _dbcontext.Products.Include(u => u.Category).ToList();
+
+            IEnumerable<Product> productList = _dbcontext.Products.Include(u => u.Category).ToList();
             return View(productList);
         }
         public IActionResult AddToCart(int productId)
@@ -44,10 +45,10 @@ namespace ShopMVCProject.Controllers
                 return NotFound();
             }
             _shoppingCart = _dbcontext.ShoppingCarts.Include(sc => sc.Items).Where(x => x.Id == 1).FirstOrDefault();
-             
+
             var itemExists = _shoppingCart.Items.Any(i => i.ProductId == productId);
             var existingItem = _shoppingCart.Items.FirstOrDefault(i => i.ProductId == productId);
-            if (itemExists ==true)
+            if (itemExists == true)
             {
                 existingItem.Quantity++;
             }
@@ -60,14 +61,14 @@ namespace ShopMVCProject.Controllers
                     ShoppingCartId = 1
                 };
                 _shoppingCart.Items.Add(newItem);
-            }            
+            }
             _dbcontext.SaveChanges();
 
 
             //return RedirectToAction("Index", "ShoppingCart",_shoppingCart);
-            return RedirectToAction("Index","ShoppingCart");
+            return RedirectToAction("Index", "ShoppingCart");
         }
-    
+
 
         public IActionResult Privacy()
         {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShopMVCProject.Data;
 
-namespace ShopMVCProject.Controllers
+namespace ShopMVCProject.Areas.Customer.Controllers
 {
     public class ShoppingCartController : Controller
     {
@@ -27,7 +27,7 @@ namespace ShopMVCProject.Controllers
         [HttpPost]
         public IActionResult RemoveItem(int itemId)
         {
-            var item = _dbcontext.Items.Where(i=>i.ShoppingCartId==1 ).Where(j=>j.ItemId==itemId).FirstOrDefault();
+            var item = _dbcontext.Items.Where(i => i.ShoppingCartId == 1).Where(j => j.ItemId == itemId).FirstOrDefault();
             if (item != null)
             {
                 _dbcontext.Items.Remove(item);
