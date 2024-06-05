@@ -35,13 +35,15 @@ namespace ShopMVCProject.Controllers
             }
             return RedirectToAction("Index");
         }
-        /*
+        
         [HttpPost]
-        public IActionResult Checkout()
+        public IActionResult Checkout(int Id)
         {
-            // Implement your checkout logic here
-            return RedirectToAction("Index", "Home");
+            var shoppingCart = _dbcontext.ShoppingCarts.Find(Id);
+            _dbcontext.Remove(shoppingCart);
+            _dbcontext.SaveChanges();
+            return View();
         }
-        */
+        
     }
 }
