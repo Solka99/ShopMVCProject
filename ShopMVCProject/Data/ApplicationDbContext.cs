@@ -22,7 +22,7 @@ namespace ShopMVCProject.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Category>().HasData(
+            /*modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Electronics", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "Clothes", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "Food", DisplayOrder = 3 },
@@ -107,7 +107,7 @@ namespace ShopMVCProject.Data
                 new ShoppingCart { Id = 1 },
                 new ShoppingCart { Id = 2 },
                 new ShoppingCart { Id = 3 }
-                );
+                ); */
         }
     }
 }
