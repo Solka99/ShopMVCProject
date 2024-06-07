@@ -23,59 +23,84 @@ namespace ShopMVCProject.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
-                new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
-                new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+                new Category { Id = 1, Name = "Electronics", DisplayOrder = 1 },
+                new Category { Id = 2, Name = "Clothes", DisplayOrder = 2 },
+                new Category { Id = 3, Name = "Food", DisplayOrder = 3 },
+                new Category { Id = 4, Name = "Drink", DisplayOrder = 4 }
                 );
 
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
                     Id = 1,
-                    Name = "Fortune of Time",
-                    Price = 90,
+                    Name = "Headphones",
+                    Price = 25,
                     CategoryId = 1,
-                    ImageUrl = ""
+                    ImageUrl = "\\images\\product\\1c7c70b9-55f0-4157-a48d-7851ebe68822.jpg"
                 },
                 new Product
                 {
                     Id = 2,
-                    Name = "Dark Skies",
-                    Price = 30,
-                    CategoryId = 1,
-                    ImageUrl = ""
+                    Name = "Coca-Cola",
+                    Price = 5,
+                    CategoryId = 4,
+                    ImageUrl = "\\images\\product\\8d3277c9-0d8f-4c70-8037-f5f7336c56c5.jpg"
                 },
                 new Product
                 {
                     Id = 3,
-                    Name = "Vanish in the Sunset",
-                    Price = 50,
-                    CategoryId = 2,
-                    ImageUrl = ""
+                    Name = "Banana",
+                    Price = 2,
+                    CategoryId = 3,
+                    ImageUrl = "\\images\\product\\c66dabb3-5704-4061-874d-4caa7a7ffc49.jpg"
                 },
                 new Product
                 {
                     Id = 4,
-                    Name = "Cotton Candy",
-                    Price = 65,
-                    CategoryId = 2,
-                    ImageUrl = ""
+                    Name = "Chocolate",
+                    Price = 4,
+                    CategoryId = 3,
+                    ImageUrl = "\\images\\product\\7d787ab8-9286-4e0a-bb5c-44ede97e5da8.jpg"
                 },
                 new Product
                 {
                     Id = 5,
-                    Name = "Rock in the Ocean",
-                    Price = 27,
-                    CategoryId = 3,
-                    ImageUrl = ""
+                    Name = "Jacket",
+                    Price = 30,
+                    CategoryId = 2,
+                    ImageUrl = "\\images\\product\\72e5fa35-4363-4fb9-a1cd-e5617cc8d26d.jpg"
                 },
                 new Product
                 {
                     Id = 6,
-                    Name = "Leaves and Wonders",
-                    Price = 23,
+                    Name = "Shoes",
+                    Price = 40,
+                    CategoryId = 2,
+                    ImageUrl = "\\images\\product\\a2c0bd01-5235-486e-b34f-9b0258f9810f.jpg"
+                },
+                new Product
+                {
+                    Id = 6,
+                    Name = "Shoes",
+                    Price = 40,
+                    CategoryId = 2,
+                    ImageUrl = "\\images\\product\\a2c0bd01-5235-486e-b34f-9b0258f9810f.jpg"
+                },
+                new Product
+                {
+                    Id = 6,
+                    Name = "Iphone",
+                    Price = 150,
+                    CategoryId = 1,
+                    ImageUrl = "\\images\\product\\85e6cb79-9ffa-4f87-a9b1-835846dd84a6.jpg"
+                },
+                new Product
+                {
+                    Id = 6,
+                    Name = "Milk",
+                    Price = 3,
                     CategoryId = 3,
-                    ImageUrl = ""
+                    ImageUrl = "\\images\\product\\108f95d5-00b7-4052-b685-0b0ab16f5fdb.jpg"
                 }
                 );
             modelBuilder.Entity<ShoppingCart>().HasData(
