@@ -3,6 +3,10 @@ using ShopMVCProject.Data;
 using Microsoft.AspNetCore.Identity;
 using ShopMVCProject.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +22,35 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/Identity/Account/Logout";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
-builder.Services.AddRazorPages();
+
+
+// Konfiguracja autoryzacji JWT
+builder.Services.AddAuthentication(options =>
+{
+    // Ustawienie domyœlnego schematu autoryzacji na JWT
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        // Ustawienia walidacji tokenu JWT
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true, // Sprawdzanie wydawcy tokenu
+            ValidateAudience = true, // Sprawdzanie odbiorcy tokenu
+            ValidateLifetime = true, // Sprawdzanie wa¿noœci tokenu
+            ValidateIssuerSigningKey = true, // Sprawdzanie klucza podpisu tokenu
+            ValidIssuer = "https://localhost:7228", // Prawid³owy wydawca tokenu
+            ValidAudience = "https://localhost:7228", // Prawid³owy odbiorca tokenu
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YcxjOMewdFfeZFQm5iGAYxTjR23Z93rLbyZucty3")) // Klucz u¿ywany do podpisywania tokenu
+        };
+    });
+
+builder.Services.AddRazorPages().AddMvcOptions(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
@@ -37,6 +69,10 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers(); // Mapowanie endpointów na kontrolery
+});
 app.MapRazorPages();
 app.MapControllerRoute(
     name: "areas",
