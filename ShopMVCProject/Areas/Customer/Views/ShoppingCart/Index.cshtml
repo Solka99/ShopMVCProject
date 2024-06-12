@@ -4,6 +4,7 @@
 
 <div class="container">
     <h2 class="text-center my-4">Shopping Cart</h2>
+    @if(Model != null){
     <div class="row">
         <div class="col-12 col-lg-9">
             @foreach(var item in Model.Items)
@@ -51,4 +52,5 @@
             </div>
         </div>
     </div>
+    }
 </div>
