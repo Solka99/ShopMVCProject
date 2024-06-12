@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShopMVCProject.Models
 {
@@ -7,7 +8,9 @@ namespace ShopMVCProject.Models
         [Key]
         public int Id { get; set; }
         public List<Item>? Items { get; set; }
-        //public int UserId {  get; set; }
+        public string? ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        public ApplicationUser? ApplicationUser { get; set; }
 
     }
 }

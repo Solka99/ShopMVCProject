@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopMVCProject.Data;
 
@@ -11,9 +12,11 @@ using ShopMVCProject.Data;
 namespace ShopMVCProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240612112150_DroppedForeignKeyItemAndAddedFKShoppingCart")]
+    partial class DroppedForeignKeyItemAndAddedFKShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,32 +251,6 @@ namespace ShopMVCProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DisplayOrder = 1,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DisplayOrder = 2,
-                            Name = "Clothes"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DisplayOrder = 3,
-                            Name = "Food"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DisplayOrder = 4,
-                            Name = "Drink"
-                        });
                 });
 
             modelBuilder.Entity("ShopMVCProject.Models.Item", b =>
@@ -290,7 +267,7 @@ namespace ShopMVCProject.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShoppingCartId")
+                    b.Property<int?>("ShoppingCartId")
                         .HasColumnType("int");
 
                     b.HasKey("ItemId");
@@ -329,80 +306,6 @@ namespace ShopMVCProject.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            ImageUrl = "\\images\\product\\1c7c70b9-55f0-4157-a48d-7851ebe68822.jpg",
-                            Name = "Headphones",
-                            Price = 25.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 4,
-                            ImageUrl = "\\images\\product\\8d3277c9-0d8f-4c70-8037-f5f7336c56c5.jpg",
-                            Name = "Coca-Cola",
-                            Price = 5.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 3,
-                            ImageUrl = "\\images\\product\\c66dabb3-5704-4061-874d-4caa7a7ffc49.jpg",
-                            Name = "Banana",
-                            Price = 2.0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 3,
-                            ImageUrl = "\\images\\product\\7d787ab8-9286-4e0a-bb5c-44ede97e5da8.jpg",
-                            Name = "Chocolate",
-                            Price = 4.0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 2,
-                            ImageUrl = "\\images\\product\\72e5fa35-4363-4fb9-a1cd-e5617cc8d26d.jpg",
-                            Name = "Jacket",
-                            Price = 30.0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 2,
-                            ImageUrl = "\\images\\product\\a2c0bd01-5235-486e-b34f-9b0258f9810f.jpg",
-                            Name = "Shoes",
-                            Price = 40.0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CategoryId = 2,
-                            ImageUrl = "\\images\\product\\a2c0bd01-5235-486e-b34f-9b0258f9810f.jpg",
-                            Name = "Shoes",
-                            Price = 40.0
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CategoryId = 1,
-                            ImageUrl = "\\images\\product\\85e6cb79-9ffa-4f87-a9b1-835846dd84a6.jpg",
-                            Name = "Iphone",
-                            Price = 150.0
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CategoryId = 3,
-                            ImageUrl = "\\images\\product\\108f95d5-00b7-4052-b685-0b0ab16f5fdb.jpg",
-                            Name = "Milk",
-                            Price = 3.0
-                        });
                 });
 
             modelBuilder.Entity("ShopMVCProject.Models.ShoppingCart", b =>
@@ -414,6 +317,7 @@ namespace ShopMVCProject.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -421,20 +325,6 @@ namespace ShopMVCProject.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("ShoppingCarts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1
-                        },
-                        new
-                        {
-                            Id = 2
-                        },
-                        new
-                        {
-                            Id = 3
-                        });
                 });
 
             modelBuilder.Entity("ShopMVCProject.Models.ApplicationUser", b =>
@@ -519,15 +409,11 @@ namespace ShopMVCProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopMVCProject.Models.ShoppingCart", "ShoppingCart")
+                    b.HasOne("ShopMVCProject.Models.ShoppingCart", null)
                         .WithMany("Items")
-                        .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ShoppingCartId");
 
                     b.Navigation("Product");
-
-                    b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("ShopMVCProject.Models.Product", b =>
@@ -545,7 +431,9 @@ namespace ShopMVCProject.Migrations
                 {
                     b.HasOne("ShopMVCProject.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApplicationUser");
                 });

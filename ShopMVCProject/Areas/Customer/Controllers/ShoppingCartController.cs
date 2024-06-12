@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ShopMVCProject.Data;
+using ShopMVCProject.Models;
 using ShopMVCProject.Utility;
+using System.Security.Claims;
 
 namespace ShopMVCProject.Areas.Customer.Controllers
 {
@@ -20,26 +23,26 @@ namespace ShopMVCProject.Areas.Customer.Controllers
         [ActionName("Index")]
         public IActionResult Index()
         {
-            //nie działa
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var shoppingCart = _dbcontext.ShoppingCarts
             .Include(sc => sc.Items)
             .ThenInclude(i => i.Product)
-            .FirstOrDefault();
+            .FirstOrDefault(x=>x.ApplicationUserId==userId);
 
              return View(shoppingCart);
-            //return View("~/Views/ShoppingCart/Index.cshtml");
 
         }
 
         [HttpPost]
         public IActionResult RemoveItem(int itemId)
         {
-            var item = _dbcontext.Items.Where(i => i.ShoppingCartId == 1).Where(j => j.ItemId == itemId).FirstOrDefault();
+           /* var item = _dbcontext.Items.Where(i => i.ShoppingCartId == 1).Where(j => j.ItemId == itemId).FirstOrDefault();
             if (item != null)
             {
                 _dbcontext.Items.Remove(item);
                 _dbcontext.SaveChanges();
-            }
+            }*/
             return RedirectToAction("Index");
         }
         

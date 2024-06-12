@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ShopMVCProject.Data;
 using ShopMVCProject.Models;
 using ShopMVCProject.Utility;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace ShopMVCProject.Areas.Customer.Controllers
 {
@@ -29,19 +32,23 @@ namespace ShopMVCProject.Areas.Customer.Controllers
         }
         public IActionResult AddToCart(int productId)
         {
-         
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+
             var productFromDb = _dbcontext.Products.Include(u => u.Category).FirstOrDefault(p => p.Id == productId);
             if (productFromDb == null)
             {
                 return NotFound();
             }
-            _shoppingCart = _dbcontext.ShoppingCarts.Include(sc => sc.Items).Where(x => x.Id == 1).FirstOrDefault();
+            _shoppingCart = _dbcontext.ShoppingCarts.Include(sc => sc.Items).Where(x => x.ApplicationUserId == userId).FirstOrDefault();
             if (_shoppingCart == null)
             {
                 var newShoppingCart = new ShoppingCart
                 {
                     //id is set automatically
-                    Items = new List<Item>()
+                    Items = new List<Item>(),
+                    ApplicationUserId=userId
                 };
                 _shoppingCart = newShoppingCart;
                 _dbcontext.ShoppingCarts.Add(newShoppingCart);
@@ -60,13 +67,14 @@ namespace ShopMVCProject.Areas.Customer.Controllers
                 {
                     ProductId = productFromDb.Id,
                     Quantity = 1,
-                    ShoppingCartId = 1
+                    ShoppingCartId = _shoppingCart.Id
                 };
-                _shoppingCart.Items.Add(newItem);
+                _shoppingCart.Items.Add(newItem); 
             }
             _dbcontext.SaveChanges();
 
-            return RedirectToAction("Index","ShoppingCart");
+
+            return RedirectToAction("Index","ShoppingCart", new { Id = _shoppingCart.Id, Items = _shoppingCart.Items, ApplicationUserId=_shoppingCart.ApplicationUserId });
         }
     
 

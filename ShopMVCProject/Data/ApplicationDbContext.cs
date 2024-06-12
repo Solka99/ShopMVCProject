@@ -21,8 +21,8 @@ namespace ShopMVCProject.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            /*modelBuilder.Entity<Category>().HasData(
+            
+            modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Electronics", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "Clothes", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "Food", DisplayOrder = 3 },
@@ -80,7 +80,7 @@ namespace ShopMVCProject.Data
                 },
                 new Product
                 {
-                    Id = 6,
+                    Id = 7,
                     Name = "Shoes",
                     Price = 40,
                     CategoryId = 2,
@@ -88,7 +88,7 @@ namespace ShopMVCProject.Data
                 },
                 new Product
                 {
-                    Id = 6,
+                    Id = 8,
                     Name = "Iphone",
                     Price = 150,
                     CategoryId = 1,
@@ -96,18 +96,19 @@ namespace ShopMVCProject.Data
                 },
                 new Product
                 {
-                    Id = 6,
+                    Id = 9,
                     Name = "Milk",
                     Price = 3,
                     CategoryId = 3,
                     ImageUrl = "\\images\\product\\108f95d5-00b7-4052-b685-0b0ab16f5fdb.jpg"
                 }
                 );
+            
             modelBuilder.Entity<ShoppingCart>().HasData(
                 new ShoppingCart { Id = 1 },
                 new ShoppingCart { Id = 2 },
                 new ShoppingCart { Id = 3 }
-                ); */
+                ); 
         }
     }
 }

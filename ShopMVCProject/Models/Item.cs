@@ -17,6 +17,7 @@ namespace ShopMVCProject.Models
         public int ShoppingCartId { get; set; } 
 
         [ForeignKey("ShoppingCartId")]
+
         public ShoppingCart ShoppingCart { get; set; }
     }
 }
