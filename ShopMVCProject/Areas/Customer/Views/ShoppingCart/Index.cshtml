@@ -14,10 +14,21 @@
                     </div>
                     <div class="col-5">
                         <h5>@item.Product.Name</h5>
-                        <p>Quantity: @item.Quantity</p>
+                        <div class="quantity-control" style="display:flex">
+                            <p style="padding-right:20px;">Quantity: @item.Quantity</p>
+                            <form asp-controller="ShoppingCart" asp-action="RemoveItemOrDecreaseQuantity" method="post">
+                            <input type="hidden" name="itemId" value="@item.ItemId" />
+                            <button type="submit" class="bi bi-dash"></button>
+                        </form>
+                        <form asp-controller="ShoppingCart" asp-action="IncreaseQuantity" method="post">
+                            <input type="hidden" name="itemId" value="@item.ItemId" />
+                            <button type="submit" class="bi bi-plus"></button>
+                        </form>
+                        </div>
                     </div>
+
                     <div class="col-2">
-                        <form asp-controller="ShoppingCart" asp-action="RemoveItem" method="post">
+                        <form asp-controller="ShoppingCart" asp-action="RemoveItemOrDecreaseQuantity" method="post">
                             <input type="hidden" name="itemId" value="@item.ItemId" />
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>

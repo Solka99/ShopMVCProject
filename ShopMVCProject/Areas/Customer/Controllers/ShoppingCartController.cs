@@ -35,18 +35,58 @@ namespace ShopMVCProject.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult RemoveItem(int itemId)
+        [ActionName("RemoveItemOrDecreaseQuantity")]
+        public IActionResult RemoveItemOrDecreaseQuantity(int itemId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var item = _dbcontext.Items.Where(i=>i.ShoppingCart.ApplicationUserId == userId).Where(j => j.ItemId == itemId).FirstOrDefault();
-            if (item != null)
+            var item = _dbcontext.Items.Where(j => j.ItemId == itemId).FirstOrDefault();
+            if (item.Quantity == 1)
             {
-                _dbcontext.Items.Remove(item);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //var item = _dbcontext.Items.Where(i => i.ShoppingCart.ApplicationUserId == userId).Where(j => j.ItemId == itemId).FirstOrDefault();
+                if (item != null)
+                {
+                    _dbcontext.Items.Remove(item);
+                    _dbcontext.SaveChanges();
+                }
+                
+            }
+            else
+            {
+                item.Quantity--;
                 _dbcontext.SaveChanges();
             }
             return RedirectToAction("Index");
         }
-        
+
+       /* [HttpPost]
+        public IActionResult DecreaseQuantity(int itemId)
+        {
+            var item = _dbcontext.Items.Where(j => j.ItemId == itemId).FirstOrDefault();
+
+            if (item != null)
+            {
+                if (item.Quantity == 1)
+                {
+                    return RedirectToAction("RemoveItem", new { itemId = itemId });
+                }
+                item.Quantity--;
+                _dbcontext.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        } */
+
+        [HttpPost]
+        public IActionResult IncreaseQuantity(int itemId)
+        {
+            var item = _dbcontext.Items.Where(j => j.ItemId == itemId).FirstOrDefault();
+            if (item != null)
+            {
+                item.Quantity++;
+                _dbcontext.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public IActionResult Checkout(int Id)
         {
