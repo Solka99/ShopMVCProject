@@ -23,7 +23,8 @@
                         </form>
                     </div>
                     <div class="col-2 text-end">
-                        <p>@item.Product.Price.ToString("c")</p>
+                        <p>1: @item.Product.Price.ToString("c")</p>
+                        <p>All: @Model.Items.Where(i => i.ProductId == item.ProductId).Sum(item => item.Product.Price * item.Quantity).ToString("c")</p>
                     </div>
                 </div>
             }
