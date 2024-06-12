@@ -37,12 +37,13 @@ namespace ShopMVCProject.Areas.Customer.Controllers
         [HttpPost]
         public IActionResult RemoveItem(int itemId)
         {
-           /* var item = _dbcontext.Items.Where(i => i.ShoppingCartId == 1).Where(j => j.ItemId == itemId).FirstOrDefault();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var item = _dbcontext.Items.Where(i=>i.ShoppingCart.ApplicationUserId == userId).Where(j => j.ItemId == itemId).FirstOrDefault();
             if (item != null)
             {
                 _dbcontext.Items.Remove(item);
                 _dbcontext.SaveChanges();
-            }*/
+            }
             return RedirectToAction("Index");
         }
         
