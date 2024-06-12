@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopMVCProject.Data;
+using ShopMVCProject.Utility;
 
 namespace ShopMVCProject.Areas.Customer.Controllers
 {
+    [Area("Customer")]
+
     public class ShoppingCartController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;
@@ -13,6 +17,7 @@ namespace ShopMVCProject.Areas.Customer.Controllers
             _dbcontext = context;
         }
 
+        [ActionName("Index")]
         public IActionResult Index()
         {
             //nie działa
@@ -21,7 +26,9 @@ namespace ShopMVCProject.Areas.Customer.Controllers
             .ThenInclude(i => i.Product)
             .FirstOrDefault();
 
-            return View(shoppingCart);
+             return View(shoppingCart);
+            //return View("~/Views/ShoppingCart/Index.cshtml");
+
         }
 
         [HttpPost]

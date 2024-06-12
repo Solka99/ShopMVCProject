@@ -23,11 +23,14 @@
                                 </p>
                             </div>
                         </div>
-                        <div>
-                            <a asp-area="Customer" asp-controller="Home" asp-action="AddToCart" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">
-                                AddToCart
-                            </a>
-                        </div>
+                        @if (User.IsInRole(SD.Role_Customer))
+                        {
+                            <div>
+                                <a asp-area="Customer" asp-controller="Home" asp-action="AddToCart" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">
+                                    AddToCart
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

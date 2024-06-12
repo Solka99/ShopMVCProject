@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopMVCProject.Data;
 using ShopMVCProject.Models;
+using ShopMVCProject.Utility;
 using System.Diagnostics;
 
 namespace ShopMVCProject.Areas.Customer.Controllers
