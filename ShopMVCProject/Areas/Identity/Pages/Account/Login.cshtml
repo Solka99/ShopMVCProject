@@ -84,38 +84,9 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        document.getElementById("account").addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            var formData = new FormData(this);
-            var email = formData.get("Input.Email");
-            var password = formData.get("Input.Password");
-            var rememberMe = formData.get("Input.RememberMe") === "true";
-
-            fetch('/Identity/Account/Login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    Input: {
-                        Email: email,
-                        Password: password,
-                        RememberMe: rememberMe
-                    }
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.token) {
-                        localStorage.setItem("jwtToken", data.token);
-                        window.location.href = "@Model.ReturnUrl";
-                    } else {
-                        // Handle login errors
-                        alert("Invalid login attempt.");
-                    }
-                })
-                .catch(error => console.error("Error:", error));
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+            // No need to handle form submission manually, the form will post and be handled by the backend.
         });
     </script>
 }
+

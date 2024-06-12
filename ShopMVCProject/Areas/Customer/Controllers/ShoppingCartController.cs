@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopMVCProject.Data;
 
 namespace ShopMVCProject.Areas.Customer.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;

@@ -125,8 +125,15 @@ namespace ShopMVCProject.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
                     var token = GenerateJwtToken(user);
-                    //return LocalRedirect(returnUrl);
-                    return new JsonResult(new { token, returnUrl });
+
+                    var cookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Expires = DateTime.UtcNow.AddDays(7)
+                    };
+                    Response.Cookies.Append("jwtToken", token, cookieOptions);
+
+                    return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -147,6 +154,7 @@ namespace ShopMVCProject.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
 
 

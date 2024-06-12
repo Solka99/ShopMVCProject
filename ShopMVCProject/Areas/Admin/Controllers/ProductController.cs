@@ -10,6 +10,8 @@ namespace ShopMVCProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
+    [Authorize]
+
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;

@@ -65,7 +65,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseMiddleware<JwtMiddleware>();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
